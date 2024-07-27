@@ -15,7 +15,7 @@ public class Conta {
 
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name="iban", nullable = false)
     private String iban;

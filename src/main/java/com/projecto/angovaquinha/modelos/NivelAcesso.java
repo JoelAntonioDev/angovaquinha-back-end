@@ -14,7 +14,7 @@ import lombok.Setter;
 public class NivelAcesso {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     private NivelAcessoEnum nivel;

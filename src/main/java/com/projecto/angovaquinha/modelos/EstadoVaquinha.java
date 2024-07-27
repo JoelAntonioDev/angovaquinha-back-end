@@ -18,7 +18,7 @@ public class EstadoVaquinha {
 
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "estado", unique=true)
     private String estado;
