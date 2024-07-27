@@ -9,25 +9,24 @@ import lombok.Setter;
 import java.util.Date;
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
-@Getter
+@NoArgsConstructor
 @Setter
-public class Contribuicao {
+@Getter
+public class Relatorio {
+
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="valor_monetario", nullable = false)
-    private Double valorMonetario;
+    private String titulo;
 
-    @Column(name="moeda", nullable = false)
-    private String moeda;
+    private String descricao;
 
-    @Column(name="data_criacao", nullable = false)
+    @Column(name="data_criacao", nullable=false)
     private Date dataCriacao;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
+    @JoinColumn(name="id_usuario", nullable = false)
     private Usuario usuario;
 }

@@ -1,9 +1,6 @@
 package com.projecto.angovaquinha.modelos;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,4 +25,8 @@ public class Conta {
 
     @Column(name="numero_conta")
     private int numeroConta;
+
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private Usuario usuario;
 }

@@ -1,15 +1,14 @@
 package com.projecto.angovaquinha.modelos;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.Date;
 
 @Entity
 @AllArgsConstructor
@@ -32,5 +31,17 @@ public class Usuario {
 
     @Column(name = "senha", nullable = false)
     private String senha;
+
+    @Column(name="data_criacao", nullable = false)
+    private Date dataCriacao;
+
+    @OneToOne
+    @JoinColumn(name = "id_nivel_acesso", nullable = false)
+    private NivelAcesso nivelAcesso;
+
+    @OneToOne
+    @JoinColumn(name = "id_informacao_contacto", nullable = false)
+    private InformacaoContacto informacaoContacto;
+
 
 }

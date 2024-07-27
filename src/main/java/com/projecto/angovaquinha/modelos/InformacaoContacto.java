@@ -13,12 +13,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class InformacaoVaquinha {
+public class InformacaoContacto {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String titulo;
+
     private String descricao;
+
 
 }
