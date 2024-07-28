@@ -25,7 +25,7 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public void excluirUsuario(Usuario usuario) {
+    public void eliminarUsuario(Usuario usuario) {
         usuarioRepository.delete(usuario);
     }
 

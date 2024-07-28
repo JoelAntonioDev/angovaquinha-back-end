@@ -12,6 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NivelAcesso {
+
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
