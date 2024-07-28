@@ -48,4 +48,7 @@ public class UsuarioService {
         return autenticado;
     }
 
+    public Long tuplasExistentes(){
+        return usuarioRepository.count();
+    }
 }

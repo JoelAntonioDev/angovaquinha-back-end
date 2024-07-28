@@ -25,9 +25,9 @@ public class ContaService {
             throw new ExcecaoP("Conta inválida: alguns campos estão vazios ou nulos");
         return contaRepositorio.save(conta);
     }
-    public Conta editarConta(Long id, Conta conta){
+    /*public Conta editarConta(Long id, Conta conta){
         return contaRepositorio.updateContaById(id, conta);
-    }
+    }*/
     public void eliminarConta(Long id){
         contaRepositorio.deleteById(id);
     }

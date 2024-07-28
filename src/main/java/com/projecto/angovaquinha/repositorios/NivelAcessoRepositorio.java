@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NivelAcessoRepositorio extends JpaRepository<NivelAcesso, Long> {
     boolean existsByNivel(String nivel);
-    public NivelAcesso updateNivelAcessoById(Long id, NivelAcesso nivelAcesso);
+    int findIdByNivel(String nivel);
 }

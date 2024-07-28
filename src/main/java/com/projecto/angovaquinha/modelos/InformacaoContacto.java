@@ -1,8 +1,6 @@
 package com.projecto.angovaquinha.modelos;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,9 +16,15 @@ public class InformacaoContacto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String titulo;
+    @Column(name = "bilhete_identidade")
+    private String bilheteIdentidade;
+    @Column(name = "numero_telefone")
+    private String numeroTelefone;
 
-    private String descricao;
+    private String provincia;
 
+    private String municipio;
+
+    private String bairro;
 
 }

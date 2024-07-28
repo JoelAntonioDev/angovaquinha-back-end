@@ -1,8 +1,6 @@
 package com.projecto.angovaquinha.controller;
 
 import com.projecto.angovaquinha.modelos.Usuario;
-import com.projecto.angovaquinha.servicos.HashingService;
-import com.projecto.angovaquinha.servicos.NivelAcessoService;
 import com.projecto.angovaquinha.servicos.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,22 +13,22 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-public class ExemploController {
+public class UsuarioController {
 
     private final UsuarioService usuarioService;
-    private final NivelAcessoService nivelAcessoService;
     @Autowired
-    public ExemploController(UsuarioService usuarioService, NivelAcessoService nivelAcessoService) {
+    public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
-        this.nivelAcessoService = nivelAcessoService;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> formData) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> formData) {
         boolean ehAutenticado = usuarioService.loginUsuario(formData.get("email"), formData.get("senha"));
         if (ehAutenticado) {
             //session.setAttribute("userEmail", formData.get("email"));
-            return ResponseEntity.ok(Map.of("message", "Autenticado com sucesso", "data", formData.toString()));
+            Usuario usuario = usuarioService.buscarUsuarioPorEmail(formData.get("email"));
+            usuario.setSenha("");
+            return ResponseEntity.ok(Map.of("message", "Autenticado com sucesso", "data", usuario));
         }
         return ResponseEntity.status(401).body(Map.of("message", "Credenciais inválidas", "data", formData.toString()));
     }

@@ -25,9 +25,9 @@ public class ContribuicaoService {
             throw new ExcecaoP("Contribuição inválida: alguns campos estão vazios ou nulos");
         return contribuicaoRepositorio.save(contribuicao);
     }
-    public Contribuicao editarContribuicao(Long id, Contribuicao contribuicao){
+    /*public Contribuicao editarContribuicao(Long id, Contribuicao contribuicao){
         return contribuicaoRepositorio.updateContribuicaoById(id, contribuicao);
-    }
+    }*/
     public void eliminarContribuicao(Long id){
         contribuicaoRepositorio.deleteById(id);
     }
