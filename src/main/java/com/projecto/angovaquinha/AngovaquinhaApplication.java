@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AngovaquinhaApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(AngovaquinhaApplication.class, args);
     }
 

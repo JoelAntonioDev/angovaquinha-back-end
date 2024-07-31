@@ -1,14 +1,17 @@
 package com.projecto.angovaquinha.servicos;
 
+import com.projecto.angovaquinha.InterfaceService.InterfaceServico;
+import com.projecto.angovaquinha.excecoes.ExcecaoP;
 import com.projecto.angovaquinha.modelos.Usuario;
 import com.projecto.angovaquinha.repositorios.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class UsuarioService {
+public class UsuarioService implements InterfaceServico<Usuario, Long> {
 
     @Autowired
     private UsuarioRepositorio usuarioRepository;
@@ -16,17 +19,45 @@ public class UsuarioService {
     @Autowired
     private HashingService hashingService;
 
-    public List<Usuario> listarUsuarios() {
+    @Override
+    public List<Usuario> listarTodos() {
         return usuarioRepository.findAll();
     }
 
-    public Usuario salvarUsuario(Usuario usuario) {
+    @Override
+    public Optional<Usuario> buscarPorId(Long id) {
+        return usuarioRepository.findById(id);
+    }
+
+    @Override
+    public Usuario adicionar(Usuario usuario) {
         usuario.setSenha(hashingService.gerarHash(usuario.getSenha()));
         return usuarioRepository.save(usuario);
     }
 
-    public void eliminarUsuario(Usuario usuario) {
-        usuarioRepository.delete(usuario);
+    @Override
+    public Usuario editar(Long id, Usuario usuario) throws ExcecaoP {
+        Optional<Usuario> usuarioExistente = usuarioRepository.findById(id);
+        if (!usuarioExistente.isPresent()) {
+            throw new ExcecaoP("Usuário não encontrado");
+        }
+        Usuario usuarioAtualizado = usuarioExistente.get();
+        if (usuario.getNome() != null) {
+            usuarioAtualizado.setNome(usuario.getNome());
+        }
+        if (usuario.getEmail() != null) {
+            usuarioAtualizado.setEmail(usuario.getEmail());
+        }
+        if (usuario.getSenha() != null) {
+            usuarioAtualizado.setSenha(hashingService.gerarHash(usuario.getSenha()));
+        }
+        // Atualize outros campos conforme necessário
+        return usuarioRepository.save(usuarioAtualizado);
+    }
+
+    @Override
+    public void eliminar(Long id) {
+        usuarioRepository.deleteById(id);
     }
 
     public Usuario buscarUsuarioPorEmail(String email) {

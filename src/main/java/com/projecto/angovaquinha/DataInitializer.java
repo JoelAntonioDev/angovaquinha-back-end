@@ -38,7 +38,7 @@ public class DataInitializer {
             //CONTA DE USUÁRIO DO ADMINISTRAÇÃO
             if(usuarioService.tuplasExistentes() == 0){
                 Usuario userAdmin = new Usuario(null,"Joel António","joellucas2020eu@gmail.com","1234", new Date() ,nivelAcesso,informacaoContacto);
-                usuarioService.salvarUsuario(userAdmin);
+                usuarioService.adicionar(userAdmin);
             }
         };
     }
