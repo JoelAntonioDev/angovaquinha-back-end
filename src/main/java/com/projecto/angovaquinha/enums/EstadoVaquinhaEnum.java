@@ -1,4 +1,4 @@
-package com.projecto.angovaquinha.modelos;
+package com.projecto.angovaquinha.enums;
 
 public enum EstadoVaquinhaEnum {
     ACTIVADO,

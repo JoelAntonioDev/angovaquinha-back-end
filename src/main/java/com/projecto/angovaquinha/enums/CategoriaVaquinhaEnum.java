@@ -1,0 +1,14 @@
+package com.projecto.angovaquinha.enums;
+
+public enum CategoriaVaquinhaEnum {
+    SAUDE_E_BEM_ESTAR,
+    EDUCACAO,
+    AJUDA_COMUNITARIA,
+    PROJECTOS_PESSOAIS,
+    CAUSAS_HUMANITARIAS,
+    MEMORIAIS_E_FUNERAIS,
+    ANIMAIS_E_PETS,
+    DESPORTO_E_ACTIVIDADES_FISICAS,
+    INOVACOES_E_TECNOLOGIA,
+    ARTE_E_CULTURA
+}

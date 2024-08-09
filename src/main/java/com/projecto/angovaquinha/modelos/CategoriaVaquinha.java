@@ -1,7 +1,8 @@
 package com.projecto.angovaquinha.modelos;
 
-import com.projecto.angovaquinha.enums.NivelAcessoEnum;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,14 +13,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class NivelAcesso {
-
+public class CategoriaVaquinha {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private NivelAcessoEnum nivel;
+    private String nome;
+
+    private String descricao;
+
+
 }
-
-

@@ -18,6 +18,7 @@ public class InformacaoContacto {
 
     @Column(name = "bilhete_identidade")
     private String bilheteIdentidade;
+
     @Column(name = "numero_telefone")
     private String numeroTelefone;
 
@@ -26,5 +27,9 @@ public class InformacaoContacto {
     private String municipio;
 
     private String bairro;
+
+    @OneToOne
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
 
 }

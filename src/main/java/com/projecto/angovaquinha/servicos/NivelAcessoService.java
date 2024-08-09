@@ -3,9 +3,7 @@ package com.projecto.angovaquinha.servicos;
 import com.projecto.angovaquinha.InterfaceService.InterfaceServico;
 import com.projecto.angovaquinha.excecoes.ExcecaoP;
 import com.projecto.angovaquinha.modelos.NivelAcesso;
-import com.projecto.angovaquinha.modelos.NivelAcessoEnum;
 import com.projecto.angovaquinha.repositorios.NivelAcessoRepositorio;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

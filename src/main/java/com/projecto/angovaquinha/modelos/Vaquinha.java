@@ -25,9 +25,6 @@ public class Vaquinha {
     @Column(name="descricao", nullable = false)
     private String descricao;
 
-    @Column(name="categoria", nullable = false)
-    private String categoria;
-
     @Column(name="data_criacao", nullable = false)
     private Date dataCriacao;
 
@@ -42,4 +39,8 @@ public class Vaquinha {
     @ManyToOne
     @JoinColumn(name="id_usuario", nullable = false)
     private Usuario usuario;
+
+    @OneToOne
+    @JoinColumn(name="id_subcategoria_vaquinha", nullable = false)
+    private SubcategoriaVaquinha subcategoriaVaquinha;
 }

@@ -2,7 +2,6 @@ package com.projecto.angovaquinha.servicos;
 
 import com.projecto.angovaquinha.InterfaceService.InterfaceServico;
 import com.projecto.angovaquinha.excecoes.ExcecaoP;
-import com.projecto.angovaquinha.modelos.EstadoVaquinha;
 import com.projecto.angovaquinha.modelos.InformacaoContacto;
 import com.projecto.angovaquinha.modelos.Usuario;
 import com.projecto.angovaquinha.repositorios.InformacaoContactoRepositorio;
@@ -17,12 +16,6 @@ public class InformacaoContactoService implements InterfaceServico<InformacaoCon
 
     @Autowired
     InformacaoContactoRepositorio informacaoContactoRepositorio;
-
-
-
-    /*public InformacaoContacto editarInformacaoContacto(Long id, InformacaoContacto informacaoContacto){
-        return informacaoContactoRepositorio.updateInformacaoContactoById(id, informacaoContacto);
-    }*/
 
     @Override
     public List<InformacaoContacto> listarTodos() {
@@ -57,5 +50,13 @@ public class InformacaoContactoService implements InterfaceServico<InformacaoCon
 
     @Override
     public void eliminar(Long id) {informacaoContactoRepositorio.deleteById(id);}
+
+
+    public InformacaoContacto buscarPorUsuarioId(Optional<Usuario> usuario){
+        return informacaoContactoRepositorio.findByUsuario(usuario);
+    }
+    public void eliminar(long id){
+        informacaoContactoRepositorio.deleteById(id);
+    }
 }
 

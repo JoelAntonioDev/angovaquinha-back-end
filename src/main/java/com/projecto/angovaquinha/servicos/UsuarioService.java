@@ -2,7 +2,9 @@ package com.projecto.angovaquinha.servicos;
 
 import com.projecto.angovaquinha.InterfaceService.InterfaceServico;
 import com.projecto.angovaquinha.excecoes.ExcecaoP;
+import com.projecto.angovaquinha.modelos.InformacaoContacto;
 import com.projecto.angovaquinha.modelos.Usuario;
+import com.projecto.angovaquinha.repositorios.InformacaoContactoRepositorio;
 import com.projecto.angovaquinha.repositorios.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,9 +17,10 @@ public class UsuarioService implements InterfaceServico<Usuario, Long> {
 
     @Autowired
     private UsuarioRepositorio usuarioRepository;
-
     @Autowired
     private HashingService hashingService;
+
+
 
     @Override
     public List<Usuario> listarTodos() {
@@ -57,7 +60,19 @@ public class UsuarioService implements InterfaceServico<Usuario, Long> {
 
     @Override
     public void eliminar(Long id) {
+        Optional<Usuario> u = buscarPorId(id);
+        InformacaoContactoService informacaoContactoService = new InformacaoContactoService();
+        InformacaoContacto i = informacaoContactoService.buscarPorUsuarioId(u);
+        informacaoContactoService.eliminar(i.getId());
         usuarioRepository.deleteById(id);
+    }
+
+    public void eliminarPeloEmail(String email){
+        Optional<Usuario> u = Optional.ofNullable(buscarUsuarioPorEmail(email));
+        InformacaoContactoService informacaoContactoService = new InformacaoContactoService();
+        InformacaoContacto i = informacaoContactoService.buscarPorUsuarioId(u);
+        informacaoContactoService.eliminar(i.getId());
+        usuarioRepository.deleteByEmail(email);
     }
 
     public Usuario buscarUsuarioPorEmail(String email) {

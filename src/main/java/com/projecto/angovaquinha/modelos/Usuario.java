@@ -40,8 +40,6 @@ public class Usuario {
     private NivelAcesso nivelAcesso;
 
     @OneToOne
-    @JoinColumn(name = "id_informacao_contacto", nullable = false)
-    private InformacaoContacto informacaoContacto;
-
-
+    @JoinColumn(name = "id_conta")
+    private Conta conta;
 }

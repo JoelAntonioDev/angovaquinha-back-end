@@ -26,7 +26,7 @@ public class ContaService  implements InterfaceServico<Conta,Long> {
 
     @Override
     public Conta adicionar(Conta conta) throws ExcecaoP {
-        if(conta.getIban() == null || conta.getIban().equals("") || conta.getIban().equals("") || conta.getNumeroConta() == 0 || conta.getNomeBanco().equals("") || conta.getUsuario() == null)
+        if(conta.getIban() == null || conta.getIban().equals("") || conta.getIban().equals("") || conta.getNumeroConta() == 0 || conta.getNomeBanco().equals("") )
             throw new ExcecaoP("Conta inválida: alguns campos estão vazios ou nulos");
         return contaRepositorio.save(conta);
     }

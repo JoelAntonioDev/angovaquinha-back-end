@@ -26,7 +26,4 @@ public class Conta {
     @Column(name="numero_conta")
     private int numeroConta;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
-    private Usuario usuario;
 }

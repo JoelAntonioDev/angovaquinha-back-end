@@ -1,6 +1,5 @@
 package com.projecto.angovaquinha.modelos;
 
-import com.projecto.angovaquinha.enums.NivelAcessoEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,14 +11,18 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class NivelAcesso {
+public class SubcategoriaVaquinha {
 
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private NivelAcessoEnum nivel;
+    private String nome;
+
+    private String descricao;
+
+    @ManyToOne
+    @JoinColumn(name = "id_categoria_vaquinha", nullable = false)
+    private CategoriaVaquinha categoria;
+
 }
-
-
