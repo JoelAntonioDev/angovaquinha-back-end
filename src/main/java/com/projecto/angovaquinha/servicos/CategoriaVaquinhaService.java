@@ -2,9 +2,10 @@ package com.projecto.angovaquinha.servicos;
 
 import com.projecto.angovaquinha.modelos.CategoriaVaquinha;
 import com.projecto.angovaquinha.repositorios.CategoriaVaquinhaRepositorio;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class CategoriaVaquinhaService  {
 
     CategoriaVaquinhaRepositorio categoriaVaquinhaRepositorio;

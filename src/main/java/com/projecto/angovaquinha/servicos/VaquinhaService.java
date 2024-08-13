@@ -23,7 +23,7 @@ public class VaquinhaService {
     }
 
     public Vaquinha adicionarVaquinha(Vaquinha vaquinha) throws ExcecaoP {
-        if(vaquinha.getUsuario() == null || vaquinha.getDescricao().equals("") || vaquinha.getTitulo().equals("") || vaquinha.getDataCriacao().equals("") || vaquinha.getEstadoVaquinha() == null || vaquinha.getContribuicao() == null)
+        if(vaquinha.getUsuario() == null || vaquinha.getDescricao().equals("") || vaquinha.getTitulo().equals("") || vaquinha.getDataCriacao().equals("") || vaquinha.getEstadoVaquinha() == null )
             throw new ExcecaoP("Vaquinha inválida: alguns campos estão vazios ou nulos");
         return vaquinhaRepositorio.save(vaquinha);
     }
@@ -34,5 +34,8 @@ public class VaquinhaService {
 
     public void eliminarVaquinha(Long id){
         vaquinhaRepositorio.deleteById(id);
+    }
+    public Vaquinha buscarVaquinhaPeloTitulo(String titulo){
+        return vaquinhaRepositorio.findByTitulo(titulo);
     }
 }

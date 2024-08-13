@@ -2,7 +2,6 @@ package com.projecto.angovaquinha.servicos;
 
 import com.projecto.angovaquinha.InterfaceService.InterfaceServico;
 import com.projecto.angovaquinha.excecoes.ExcecaoP;
-import com.projecto.angovaquinha.modelos.Conta;
 import com.projecto.angovaquinha.modelos.EstadoVaquinha;
 import com.projecto.angovaquinha.repositorios.EstadoVaquinhaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,9 @@ public class EstadoVaquinhaService implements InterfaceServico<EstadoVaquinha,Lo
     public List<EstadoVaquinha> listarTodos() {return estadoVaquinhaRepositorio.findAll();}
 
     @Override
-    public Optional<EstadoVaquinha> buscarPorId(Long id) {return estadoVaquinhaRepositorio.findById(id);}
+    public Optional<EstadoVaquinha> buscarPorId(Long id) {
+        return estadoVaquinhaRepositorio.findById(id);
+    }
 
     @Override
     public EstadoVaquinha adicionar(EstadoVaquinha estadoVaquinha) throws ExcecaoP {

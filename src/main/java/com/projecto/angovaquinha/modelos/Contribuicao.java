@@ -30,4 +30,8 @@ public class Contribuicao {
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
+
+    @OneToOne
+    @JoinColumn(name="id_vaquinha")
+    private Vaquinha vaquinha;
 }

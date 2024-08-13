@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Entity
 @AllArgsConstructor
@@ -22,19 +23,21 @@ public class Vaquinha {
     @Column(name="titulo", nullable = false)
     private String titulo;
 
-    @Column(name="descricao", nullable = false)
+    @Column(name="descricao", nullable = false, length = 500)
     private String descricao;
 
     @Column(name="data_criacao", nullable = false)
     private Date dataCriacao;
 
+    @Column(name="quantia", nullable = false)
+    private int quantia;
+
+    @Column(name="caminho_imagem")
+    private String caminhoImagem;
+
     @OneToOne
     @JoinColumn(name="id_estado_vaquinha", nullable = false)
     private EstadoVaquinha estadoVaquinha;
-
-    @OneToOne
-    @JoinColumn(name="id_contribuicao", nullable = false)
-    private Contribuicao contribuicao;
 
     @ManyToOne
     @JoinColumn(name="id_usuario", nullable = false)
@@ -43,4 +46,5 @@ public class Vaquinha {
     @OneToOne
     @JoinColumn(name="id_subcategoria_vaquinha", nullable = false)
     private SubcategoriaVaquinha subcategoriaVaquinha;
+
 }
