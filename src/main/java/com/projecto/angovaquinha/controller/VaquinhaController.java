@@ -58,7 +58,7 @@ public class VaquinhaController {
         String fileName = file.getOriginalFilename();
         File dest = new File(absolutePath, fileName);
 
-
+        //vaquinha por padrão está com o estado desactivado
         Optional<EstadoVaquinha> e = estadoVaquinhaService.buscarPorId(2L);
         Usuario u = usuarioService.buscarUsuarioPorEmail(email);
         SubcategoriaVaquinha s = subcategoriaVaquinhaService.buscarPeloId(subcategoria);

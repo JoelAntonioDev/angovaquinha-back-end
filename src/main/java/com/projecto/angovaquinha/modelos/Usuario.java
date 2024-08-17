@@ -35,7 +35,7 @@ public class Usuario {
     @Column(name="data_criacao", nullable = false)
     private Date dataCriacao;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_nivel_acesso", nullable = false)
     private NivelAcesso nivelAcesso;
 

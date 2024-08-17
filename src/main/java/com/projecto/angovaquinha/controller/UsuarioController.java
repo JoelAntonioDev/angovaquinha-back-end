@@ -8,18 +8,17 @@ import com.projecto.angovaquinha.enums.NivelAcessoEnum;
 import com.projecto.angovaquinha.modelos.Usuario;
 import com.projecto.angovaquinha.servicos.InformacaoContactoService;
 import com.projecto.angovaquinha.servicos.UsuarioService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@SessionAttributes("user")
 @RequestMapping("/api")
 public class UsuarioController {
 
@@ -32,15 +31,22 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> formData) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> formData, HttpSession session) {
         boolean ehAutenticado = usuarioService.loginUsuario(formData.get("email"), formData.get("senha"));
         if (ehAutenticado) {
-            //session.setAttribute("userEmail", formData.get("email"));
             Usuario usuario = usuarioService.buscarUsuarioPorEmail(formData.get("email"));
             usuario.setSenha("");
+            session.setAttribute("user", formData.get("email"));
             return ResponseEntity.ok(Map.of("message", "Autenticado com sucesso", "data", usuario));
         }
         return ResponseEntity.status(401).body(Map.of("message", "Credenciais inválidas", "data", formData.toString()));
+    }
+    @GetMapping("/logout")
+    public ResponseEntity<Map<String, String>> logout(HttpSession session) {
+        if (session != null) {
+            session.removeAttribute("user"); // Invalidate session before committing the response
+        }
+        return ResponseEntity.ok(Map.of("message", "Sessão terminada com sucesso", "data", ""));
     }
     @PostMapping("/signUp")
     public ResponseEntity<Map<String, String>> signUp(@RequestBody Map<String, String> formData) {
