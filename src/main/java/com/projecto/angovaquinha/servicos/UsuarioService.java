@@ -19,17 +19,24 @@ public class UsuarioService implements InterfaceServico<Usuario, Long> {
     private UsuarioRepositorio usuarioRepository;
     @Autowired
     private HashingService hashingService;
-
+    @Autowired
+    private InformacaoContactoService informacaoContactoService;
 
 
     @Override
     public List<Usuario> listarTodos() {
-        return usuarioRepository.findAll();
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        for (Usuario usuario : usuarios) {
+            usuario.setSenha("");
+        }
+        return usuarios;
     }
 
     @Override
     public Optional<Usuario> buscarPorId(Long id) {
-        return usuarioRepository.findById(id);
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
+        usuario.ifPresent(usuario1 -> usuario1.setSenha(""));
+        return usuario;
     }
 
     @Override
@@ -61,26 +68,31 @@ public class UsuarioService implements InterfaceServico<Usuario, Long> {
     @Override
     public void eliminar(Long id) {
         Optional<Usuario> u = buscarPorId(id);
-        InformacaoContactoService informacaoContactoService = new InformacaoContactoService();
         InformacaoContacto i = informacaoContactoService.buscarPorUsuarioId(u);
-        informacaoContactoService.eliminar(i.getId());
+        if(i != null)
+            informacaoContactoService.eliminar(i.getId());
         usuarioRepository.deleteById(id);
     }
 
+
     public void eliminarPeloEmail(String email){
         Optional<Usuario> u = Optional.ofNullable(buscarUsuarioPorEmail(email));
-        InformacaoContactoService informacaoContactoService = new InformacaoContactoService();
         InformacaoContacto i = informacaoContactoService.buscarPorUsuarioId(u);
         informacaoContactoService.eliminar(i.getId());
         usuarioRepository.deleteByEmail(email);
     }
 
+
     public Usuario buscarUsuarioPorEmail(String email) {
-        return usuarioRepository.findByEmail(email);
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        usuario.setSenha("");
+        return usuario;
     }
 
     public Usuario buscarUsuarioPorNome(String nome){
-        return usuarioRepository.findByNome(nome);
+        Usuario usuario = usuarioRepository.findByNome(nome);
+        usuario.setSenha("");
+        return usuario;
     }
 
     public boolean loginUsuario(String email, String senha) {

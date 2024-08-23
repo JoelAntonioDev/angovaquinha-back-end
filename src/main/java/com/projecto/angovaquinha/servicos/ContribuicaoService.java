@@ -3,6 +3,7 @@ package com.projecto.angovaquinha.servicos;
 import com.projecto.angovaquinha.InterfaceService.InterfaceServico;
 import com.projecto.angovaquinha.excecoes.ExcecaoP;
 import com.projecto.angovaquinha.modelos.Contribuicao;
+import com.projecto.angovaquinha.modelos.Vaquinha;
 import com.projecto.angovaquinha.repositorios.ContribuicaoRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,4 +41,7 @@ public class ContribuicaoService  implements InterfaceServico<Contribuicao,Long>
     /*public Contribuicao editarContribuicao(Long id, Contribuicao contribuicao){
         return contribuicaoRepositorio.updateContribuicaoById(id, contribuicao);
     }*/
+    public List<Contribuicao> listarContribuicoesPorVaquinha(Vaquinha vaquinha){
+        return contribuicaoRepositorio.findByVaquinha(vaquinha);
+    }
 }

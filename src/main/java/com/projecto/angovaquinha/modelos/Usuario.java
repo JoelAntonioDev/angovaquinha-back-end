@@ -1,5 +1,6 @@
 package com.projecto.angovaquinha.modelos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -28,7 +29,7 @@ public class Usuario {
 
     @Column(name = "email", unique = true, nullable = false)
     private String email;
-
+    @JsonIgnore
     @Column(name = "senha", nullable = false)
     private String senha;
 

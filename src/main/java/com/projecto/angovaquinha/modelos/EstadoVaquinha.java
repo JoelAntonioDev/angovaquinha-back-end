@@ -22,4 +22,5 @@ public class EstadoVaquinha {
 
     @Column(name = "estado", unique=true)
     private String estado;
+
 }
