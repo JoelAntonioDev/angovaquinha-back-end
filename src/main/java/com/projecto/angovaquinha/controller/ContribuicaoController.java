@@ -57,5 +57,4 @@ public class ContribuicaoController {
         }
         return ResponseEntity.ok(Map.of("message","Doações encontradas com sucesso","data",listaContribuintes));
     }
-
 }
