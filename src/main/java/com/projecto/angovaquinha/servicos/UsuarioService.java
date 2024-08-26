@@ -1,10 +1,8 @@
 package com.projecto.angovaquinha.servicos;
 
-import com.projecto.angovaquinha.InterfaceService.InterfaceServico;
 import com.projecto.angovaquinha.excecoes.ExcecaoP;
 import com.projecto.angovaquinha.modelos.InformacaoContacto;
 import com.projecto.angovaquinha.modelos.Usuario;
-import com.projecto.angovaquinha.repositorios.InformacaoContactoRepositorio;
 import com.projecto.angovaquinha.repositorios.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsuarioService implements InterfaceServico<Usuario, Long> {
+public class UsuarioService {
 
     @Autowired
     private UsuarioRepositorio usuarioRepository;
@@ -23,7 +21,7 @@ public class UsuarioService implements InterfaceServico<Usuario, Long> {
     private InformacaoContactoService informacaoContactoService;
 
 
-    @Override
+
     public List<Usuario> listarTodos() {
         List<Usuario> usuarios = usuarioRepository.findAll();
         for (Usuario usuario : usuarios) {
@@ -32,20 +30,20 @@ public class UsuarioService implements InterfaceServico<Usuario, Long> {
         return usuarios;
     }
 
-    @Override
+
     public Optional<Usuario> buscarPorId(Long id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         usuario.ifPresent(usuario1 -> usuario1.setSenha(""));
         return usuario;
     }
 
-    @Override
+
     public Usuario adicionar(Usuario usuario) {
         usuario.setSenha(hashingService.gerarHash(usuario.getSenha()));
         return usuarioRepository.save(usuario);
     }
 
-    @Override
+
     public Usuario editar(Long id, Usuario usuario) throws ExcecaoP {
         Optional<Usuario> usuarioExistente = usuarioRepository.findById(id);
         if (!usuarioExistente.isPresent()) {
@@ -65,7 +63,7 @@ public class UsuarioService implements InterfaceServico<Usuario, Long> {
         return usuarioRepository.save(usuarioAtualizado);
     }
 
-    @Override
+
     public void eliminar(Long id) {
         Optional<Usuario> u = buscarPorId(id);
         InformacaoContacto i = informacaoContactoService.buscarPorUsuarioId(u);

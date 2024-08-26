@@ -1,6 +1,5 @@
 package com.projecto.angovaquinha.repositorios;
 
-import com.projecto.angovaquinha.modelos.CategoriaVaquinha;
 import com.projecto.angovaquinha.modelos.SubcategoriaVaquinha;
 import org.springframework.data.repository.CrudRepository;
 

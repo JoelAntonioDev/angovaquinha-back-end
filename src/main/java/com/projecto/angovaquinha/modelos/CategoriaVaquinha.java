@@ -22,5 +22,4 @@ public class CategoriaVaquinha {
 
     private String descricao;
 
-
 }

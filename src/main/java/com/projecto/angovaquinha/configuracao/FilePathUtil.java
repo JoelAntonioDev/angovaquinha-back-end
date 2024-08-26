@@ -1,9 +1,5 @@
 package com.projecto.angovaquinha.configuracao;
 
-import org.springframework.util.ClassUtils;
-
-import java.io.File;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 

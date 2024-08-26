@@ -1,6 +1,6 @@
 package com.projecto.angovaquinha.servicos;
 
-import com.projecto.angovaquinha.InterfaceService.InterfaceServico;
+
 import com.projecto.angovaquinha.excecoes.ExcecaoP;
 import com.projecto.angovaquinha.modelos.InformacaoContacto;
 import com.projecto.angovaquinha.modelos.Usuario;
@@ -12,29 +12,28 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class InformacaoContactoService implements InterfaceServico<InformacaoContacto,Long> {
+public class InformacaoContactoService {
 
     @Autowired
     InformacaoContactoRepositorio informacaoContactoRepositorio;
 
-    @Override
+
     public List<InformacaoContacto> listarTodos() {
         return informacaoContactoRepositorio.findAll();
     }
 
-    @Override
+
     public Optional<InformacaoContacto> buscarPorId(Long id) {
         return informacaoContactoRepositorio.findById(id);
     }
 
-    @Override
+
     public InformacaoContacto adicionar(InformacaoContacto informacaoContacto) throws ExcecaoP {
         if(informacaoContacto.getBairro().equals("") || informacaoContacto.getProvincia().equals("") || informacaoContacto.getMunicipio().equals("") || informacaoContacto.getNumeroTelefone().equals("") || informacaoContacto.getBilheteIdentidade().equals(""))
             throw new ExcecaoP("Informação de Contacto Inválida: alguns campos estão vazios ou nulos");
         return informacaoContactoRepositorio.save(informacaoContacto);
     }
 
-    @Override
     public InformacaoContacto editar(Long id, InformacaoContacto informacaoContacto) throws ExcecaoP {
         Optional<InformacaoContacto> infomacaoExistente = informacaoContactoRepositorio.findById(id);
 
@@ -48,7 +47,7 @@ public class InformacaoContactoService implements InterfaceServico<InformacaoCon
         return informacaoContactoRepositorio.save(infomacaoAtualizado);
     }
 
-    @Override
+
     public void eliminar(Long id) {informacaoContactoRepositorio.deleteById(id);}
 
 

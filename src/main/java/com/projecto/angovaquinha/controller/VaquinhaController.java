@@ -17,11 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.projecto.angovaquinha.configuracao.FilePathUtil.getProjectRoot;
 
 @RestController
 @RequestMapping("/api")
