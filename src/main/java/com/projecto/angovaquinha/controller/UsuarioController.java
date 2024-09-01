@@ -112,6 +112,15 @@ public class UsuarioController {
         return ResponseEntity.ok(Map.of("message", "Usuários encontrados", "data", usuarios));
     }
 
+    @GetMapping("/get-qtd-usuarios")
+    public ResponseEntity<Map<String, Object>> getTotalUsuarios(){
+        Long qtdUsuarios = usuarioService.tuplasExistentes();
+        if(qtdUsuarios!=0)
+            return ResponseEntity.ok(Map.of("message","Quantidade de usuários retornada com sucesso!", "data",qtdUsuarios));
+        return ResponseEntity.ok(Map.of("message","Quantidade de usuários retornada com sucesso!", "data",0));
+
+    }
+
     @PutMapping("/edit-contact-info/{id}")
     public ResponseEntity<Map<String, String>> editContactInfo(@PathVariable Long id,
                                                                @RequestBody InformacaoContacto novaInfo) {

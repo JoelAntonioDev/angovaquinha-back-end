@@ -15,7 +15,7 @@ import java.util.Optional;
 public class VaquinhaService {
 
     @Autowired
-    VaquinhaRepositorio vaquinhaRepositorio;
+    private VaquinhaRepositorio vaquinhaRepositorio;
     @Autowired
     private EstadoVaquinhaRepositorio estadoVaquinhaRepositorio;
     public List<Vaquinha> listarVaquinhas(){
@@ -78,5 +78,8 @@ public class VaquinhaService {
 
         vaquinha.setEstadoVaquinha(novoEstado);
         return vaquinhaRepositorio.save(vaquinha);
+    }
+    public Long tuplasExistentes(){
+        return vaquinhaRepositorio.count();
     }
 }

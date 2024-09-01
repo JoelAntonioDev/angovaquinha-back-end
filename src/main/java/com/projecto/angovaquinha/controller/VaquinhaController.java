@@ -159,4 +159,18 @@ public class VaquinhaController {
             return ResponseEntity.badRequest().body(null);
         }
     }
+    @GetMapping("/get-qtd-vaquinhas")
+    public ResponseEntity<Map<String, Object>> getTotalVaquinhas(){
+        Long qtdVaquinhas = vaquinhaService.tuplasExistentes();
+        if(qtdVaquinhas!=0)
+            return ResponseEntity.ok(Map.of("message","Quantidade de vaquinhas retornada com sucesso!", "data",qtdVaquinhas));
+        return ResponseEntity.ok(Map.of("message","Quantidade de vaquinhas retornada com sucesso!", "data",0));
+    }
+    @GetMapping("/get-qtd-doacoes")
+    public ResponseEntity<Map<String, Object>> getTotalDoacoesVaquinha(){
+        Long qtdVaquinhas = vaquinhaService.tuplasExistentes();
+        if(qtdVaquinhas!=0)
+            return ResponseEntity.ok(Map.of("message","Quantidade de vaquinhas retornada com sucesso!", "data",qtdVaquinhas));
+        return ResponseEntity.ok(Map.of("message","Quantidade de vaquinhas retornada com sucesso!", "data",0));
+    }
 }
