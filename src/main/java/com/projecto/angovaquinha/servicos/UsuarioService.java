@@ -17,10 +17,6 @@ public class UsuarioService {
     private UsuarioRepositorio usuarioRepository;
     @Autowired
     private HashingService hashingService;
-    @Autowired
-    private InformacaoContactoService informacaoContactoService;
-
-
 
     public List<Usuario> listarTodos() {
         List<Usuario> usuarios = usuarioRepository.findAll();
@@ -66,20 +62,14 @@ public class UsuarioService {
 
     public void eliminar(Long id) {
         Optional<Usuario> u = buscarPorId(id);
-        InformacaoContacto i = informacaoContactoService.buscarPorUsuarioId(u);
-        if(i != null)
-            informacaoContactoService.eliminar(i.getId());
         usuarioRepository.deleteById(id);
     }
 
 
     public void eliminarPeloEmail(String email){
         Optional<Usuario> u = Optional.ofNullable(buscarUsuarioPorEmail(email));
-        InformacaoContacto i = informacaoContactoService.buscarPorUsuarioId(u);
-        informacaoContactoService.eliminar(i.getId());
         usuarioRepository.deleteByEmail(email);
     }
-
 
     public Usuario buscarUsuarioPorEmail(String email) {
         Usuario usuario = usuarioRepository.findByEmail(email);

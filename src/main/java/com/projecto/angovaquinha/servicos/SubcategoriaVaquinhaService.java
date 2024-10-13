@@ -3,22 +3,22 @@ package com.projecto.angovaquinha.servicos;
 import com.projecto.angovaquinha.modelos.CategoriaVaquinha;
 import com.projecto.angovaquinha.modelos.SubcategoriaVaquinha;
 import com.projecto.angovaquinha.repositorios.SubcategoriaVaquinhaRepositorio;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class SubcategoriaVaquinhaService  {
 
+    @Autowired
     SubcategoriaVaquinhaRepositorio subcategoriaVaquinhaRepositorio;
-
-    public SubcategoriaVaquinhaService(SubcategoriaVaquinhaRepositorio subcategoriaVaquinhaRepositorio) {
-        this.subcategoriaVaquinhaRepositorio = subcategoriaVaquinhaRepositorio;
-    }
 
     public List<SubcategoriaVaquinha> listar() {
         return (List<SubcategoriaVaquinha>) subcategoriaVaquinhaRepositorio.findAll();
     }
-    public SubcategoriaVaquinha buscarPeloId(long id){
+    public Optional<SubcategoriaVaquinha> buscarPeloId(long id){
         return subcategoriaVaquinhaRepositorio.findById(id);
     }
     public SubcategoriaVaquinha buscarPeloNome(String nome){

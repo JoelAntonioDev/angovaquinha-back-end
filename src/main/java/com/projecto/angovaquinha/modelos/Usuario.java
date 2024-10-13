@@ -17,7 +17,6 @@ import java.util.Date;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 public class Usuario {
 
     @jakarta.persistence.Id
@@ -43,4 +42,7 @@ public class Usuario {
     @OneToOne
     @JoinColumn(name = "id_conta")
     private Conta conta;
+
+    @Embedded
+    private InformacaoContacto informacaoContacto;
 }

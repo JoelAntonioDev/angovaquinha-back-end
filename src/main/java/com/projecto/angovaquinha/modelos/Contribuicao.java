@@ -1,5 +1,6 @@
 package com.projecto.angovaquinha.modelos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,10 +28,12 @@ public class Contribuicao {
     @Column(name="data_criacao", nullable = false)
     private Date dataCriacao;
 
+    //@JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="id_vaquinha")
     private Vaquinha vaquinha;

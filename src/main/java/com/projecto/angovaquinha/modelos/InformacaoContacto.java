@@ -1,35 +1,27 @@
 package com.projecto.angovaquinha.modelos;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
+
+@Data
+@Embeddable
+@EqualsAndHashCode
 public class InformacaoContacto {
-    @jakarta.persistence.Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(name = "bilhete_identidade")
+    @Column(name = "bilhete_identidade", nullable = true)
     private String bilheteIdentidade;
 
-    @Column(name = "numero_telefone")
+    @Column(name = "numero_telefone", nullable = true)
     private String numeroTelefone;
 
+    @Column(name = "provincia", nullable = true)
     private String provincia;
 
+    @Column(name = "municipio", nullable = true)
     private String municipio;
 
+    @Column(name = "bairro", nullable = true)
     private String bairro;
-
-    @OneToOne
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
 
 }

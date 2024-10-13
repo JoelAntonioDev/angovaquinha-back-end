@@ -22,8 +22,8 @@ public class VaquinhaService {
         return vaquinhaRepositorio.findAll();
     }
 
-    public Vaquinha buscarVaquinhaById(Long id){
-        return vaquinhaRepositorio.findById(id).get();
+    public Optional<Vaquinha> buscarVaquinhaById(Long id){
+        return vaquinhaRepositorio.findById(id);
     }
 
     public Vaquinha adicionarVaquinha(Vaquinha vaquinha) throws ExcecaoP {
@@ -36,8 +36,9 @@ public class VaquinhaService {
         return vaquinhaRepositorio.updateVaquinhaById(id, vaquinha);
     }*/
 
-    public void eliminarVaquinha(Long id){
-        vaquinhaRepositorio.deleteById(id);
+    public void eliminarVaquinha(Long id) throws ExcecaoP {
+        Vaquinha vaquinha = vaquinhaRepositorio.findById(id).orElseThrow(()-> new ExcecaoP(""));
+        vaquinhaRepositorio.delete(vaquinha);
     }
     public Vaquinha buscarVaquinhaPeloTitulo(String titulo){
         return vaquinhaRepositorio.findByTitulo(titulo);
@@ -48,18 +49,18 @@ public class VaquinhaService {
         if (!vaquinhaExistente.isPresent()) {
             throw new ExcecaoP("Vaquinha não encontrada");
         }
-        Vaquinha vaquinhaAtualizado = vaquinhaExistente.get();
+
         if (vaquinha.getTitulo() != null) {
-            vaquinhaAtualizado.setTitulo(vaquinha.getTitulo());
+            vaquinhaExistente.get().setTitulo(vaquinha.getTitulo());
         }
         if (vaquinha.getDescricao() != null) {
-            vaquinhaAtualizado.setDescricao(vaquinha.getDescricao());
+            vaquinhaExistente.get().setDescricao(vaquinha.getDescricao());
         }
         if (vaquinha.getQuantia() != 0) {
-            vaquinhaAtualizado.setQuantia(vaquinha.getQuantia());
+            vaquinhaExistente.get().setQuantia(vaquinha.getQuantia());
         }
         // Atualize outros campos conforme necessário
-        return vaquinhaRepositorio.save(vaquinhaAtualizado);
+        return vaquinhaRepositorio.save(vaquinhaExistente.get());
     }
     public Vaquinha alternarEstado(Long vaquinhaId) throws ExcecaoP {
         Vaquinha vaquinha = vaquinhaRepositorio.findById(vaquinhaId)

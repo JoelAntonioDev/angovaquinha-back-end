@@ -10,6 +10,9 @@ import com.projecto.angovaquinha.servicos.EstadoVaquinhaService;
 import com.projecto.angovaquinha.servicos.SubcategoriaVaquinhaService;
 import com.projecto.angovaquinha.servicos.UsuarioService;
 import com.projecto.angovaquinha.servicos.VaquinhaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,21 +25,24 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/vaquinhas")
 public class VaquinhaController {
-    private final VaquinhaService vaquinhaService;
-    private final SubcategoriaVaquinhaService subcategoriaVaquinhaService;
-    private final EstadoVaquinhaService estadoVaquinhaService;
-    private final UsuarioService usuarioService;
+    @Autowired
+    private VaquinhaService vaquinhaService;
+    @Autowired
+    private SubcategoriaVaquinhaService subcategoriaVaquinhaService;
+    @Autowired
+    private EstadoVaquinhaService estadoVaquinhaService;
+    @Autowired
+    private UsuarioService usuarioService;
 
-    public VaquinhaController(VaquinhaService vaquinhaService, SubcategoriaVaquinhaService subcategoriaVaquinhaService, EstadoVaquinhaService estadoVaquinhaService, UsuarioService usuarioService) {
-        this.vaquinhaService = vaquinhaService;
-        this.subcategoriaVaquinhaService = subcategoriaVaquinhaService;
-        this.estadoVaquinhaService = estadoVaquinhaService;
-        this.usuarioService = usuarioService;
-    }
 
-    @PostMapping("/add-vaquinha")
+    @PostMapping
+    @Operation(summary = "Adicionar uma vaquinha",
+            description = "Retorna a vaquinha adicionada, recebe as informações de vaquinha"
+    )
+    @ApiResponse(responseCode = "201", description = "Usuário criado com sucesso")
+    @ApiResponse(responseCode = "500", description = "Falha ao salvar arquivo")
     public ResponseEntity<Map<String, String>> addVaquinha(
             @RequestParam("email") String email,
             @RequestParam("objectivo") Integer objectivo,
@@ -61,8 +67,8 @@ public class VaquinhaController {
         //vaquinha por padrão está com o estado desactivado
         Optional<EstadoVaquinha> e = estadoVaquinhaService.buscarPorId(2L);
         Usuario u = usuarioService.buscarUsuarioPorEmail(email);
-        SubcategoriaVaquinha s = subcategoriaVaquinhaService.buscarPeloId(subcategoria);
-        Vaquinha v = new Vaquinha(null,titulo, descricao, new Date(), objectivo,relativePath+"\\"+fileName, e.orElse(null),u,s);
+        Optional<SubcategoriaVaquinha> s = subcategoriaVaquinhaService.buscarPeloId(subcategoria);
+        Vaquinha v = new Vaquinha(null,titulo, descricao, new Date(), objectivo,relativePath+"\\"+fileName, e.orElse(null),u,s.get());
         try {
             vaquinhaService.adicionarVaquinha(v);
         } catch (ExcecaoP ex) {
@@ -80,7 +86,8 @@ public class VaquinhaController {
         response.put("filePath", dest.getAbsolutePath());
         return ResponseEntity.ok(response);
     }
-    @GetMapping("/vaquinhas")
+
+    @GetMapping
     public ResponseEntity<Map<String, Object>> getVaquinhas() {
         List<Vaquinha> vaquinhas = vaquinhaService.listarVaquinhas();
         if (vaquinhas.isEmpty()) {
@@ -101,24 +108,26 @@ public class VaquinhaController {
         }).collect(Collectors.toList());
         return ResponseEntity.ok(Map.of("message", "Vaquinhas encontradas", "data", vaquinhasWithDetails));
     }
-    @GetMapping("/get-vaquinhas")
-    public ResponseEntity<Map<String, Object>> getVaquinhasB(){
-        List<Vaquinha> v = vaquinhaService.listarVaquinhas();
-        if(v.isEmpty()){
-            return ResponseEntity.status(404).body(Map.of("message","Não foi encontrado nenhuma vaquinha","data",""));
+
+    @GetMapping("/{vaquinhaId}")
+    public ResponseEntity<Map<String, Object>> buscarVaquinha(@PathVariable Long vaquinhaId){
+        try {
+            Vaquinha v = vaquinhaService.buscarVaquinhaById(vaquinhaId).orElseThrow(() -> new ExcecaoP("Vaquinha não encontrada, Id:" + vaquinhaId));
+            return ResponseEntity.ok(Map.of("message", "Existem vaquinhas", "data", v));
+        }catch (ExcecaoP e) {
+            return ResponseEntity.status(404).body(Map.of("message", e.getMessage()));
         }
-        return ResponseEntity.ok(Map.of("message","Existem vaquinhas", "data",v));
     }
 
-    @PostMapping("/get-vaquinha")
-    public ResponseEntity<Map<String, Object>> getVaquinha(@RequestParam("titulo") String titulo){
+    @PostMapping("/{titulo}")
+    public ResponseEntity<Map<String, Object>> getVaquinha(@PathVariable("titulo") String titulo){
         Vaquinha v = vaquinhaService.buscarVaquinhaPeloTitulo(titulo);
         if(v == null){
             return ResponseEntity.status(404).body(Map.of("message","Vaquinha não encontrada","data",""));
         }
         return ResponseEntity.ok(Map.of("message","Vaquinha encontrada com sucesso", "data",v));
     }
-
+    /*
     @GetMapping("/get-categorias")
     public ResponseEntity<Map<String, Object>> getCategoriasSubcategorias() {
         List<SubcategoriaVaquinha> subcategorias = subcategoriaVaquinhaService.listar();
@@ -126,20 +135,18 @@ public class VaquinhaController {
             return ResponseEntity.ok(Map.of("message", "Categorias e Subcategorias não encontradas"));
         }
         return ResponseEntity.ok(Map.of("message", "Categorias e Subcategorias encontradas com sucesso", "data", subcategorias));
-    }
-    @DeleteMapping("/deleteVaquinha/{id}")
+    }*/
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteVaquinha(@PathVariable Long id) {
         try {
             vaquinhaService.eliminarVaquinha(id);
             return ResponseEntity.ok(Map.of("message", "Vaquinha removida com sucesso"));
-        } catch (Exception e) {
-            System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB" + id );
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("message", "Erro ao remover o Vaquinha"));
+        } catch (ExcecaoP e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( e.getMessage());
         }
     }
 
-    @PutMapping("/editVaquinha/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Map<String, String>> editarVaquinha(@PathVariable Long id, @RequestBody Vaquinha novaInfo) {
         try {
             vaquinhaService.editar(id, novaInfo);
@@ -150,7 +157,8 @@ public class VaquinhaController {
             return ResponseEntity.status(500).body(Map.of("message", "Erro interno: " + e.getMessage()));
         }
     }
-    @PatchMapping("/toggleVaquinhaStatus/{id}")
+
+    @PatchMapping("/toggle-vaquinha-status/{id}")
     public ResponseEntity<Vaquinha> alternarEstado(@PathVariable Long id) {
         try {
             Vaquinha vaquinha = vaquinhaService.alternarEstado(id);
@@ -159,6 +167,7 @@ public class VaquinhaController {
             return ResponseEntity.badRequest().body(null);
         }
     }
+
     @GetMapping("/get-qtd-vaquinhas")
     public ResponseEntity<Map<String, Object>> getTotalVaquinhas(){
         Long qtdVaquinhas = vaquinhaService.tuplasExistentes();
@@ -166,11 +175,6 @@ public class VaquinhaController {
             return ResponseEntity.ok(Map.of("message","Quantidade de vaquinhas retornada com sucesso!", "data",qtdVaquinhas));
         return ResponseEntity.ok(Map.of("message","Quantidade de vaquinhas retornada com sucesso!", "data",0));
     }
-    @GetMapping("/get-qtd-doacoes")
-    public ResponseEntity<Map<String, Object>> getTotalDoacoesVaquinha(){
-        Long qtdVaquinhas = vaquinhaService.tuplasExistentes();
-        if(qtdVaquinhas!=0)
-            return ResponseEntity.ok(Map.of("message","Quantidade de vaquinhas retornada com sucesso!", "data",qtdVaquinhas));
-        return ResponseEntity.ok(Map.of("message","Quantidade de vaquinhas retornada com sucesso!", "data",0));
-    }
+
+
 }
